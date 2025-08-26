@@ -1,0 +1,23 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Installiere nodemon für Development
+RUN npm install -g nodemon
+
+# Package.json kopieren
+COPY package*.json ./
+
+# Alle Dependencies installieren (inkl. devDependencies)
+RUN npm install
+
+# Anwendungscode kopieren
+COPY . .
+
+# Uploads-Verzeichnis erstellen
+RUN mkdir -p uploads
+
+EXPOSE 5000
+
+# Starte mit nodemon für Hot Reload
+CMD ["npm", "run", "dev"]

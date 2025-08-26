@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  # Backend Server (Development)
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    command: npm run dev
+
+  # Frontend Client (Development)
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    environment:
+      NODE_ENV: development
+      DANGEROUSLY_DISABLE_HOST_CHECK: "true"
+      WDS_SOCKET_HOST: "0.0.0.0"
+      WDS_SOCKET_PORT: "3000"
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    command: npm start

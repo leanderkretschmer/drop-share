@@ -1,0 +1,17 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Package.json kopieren
+COPY package*.json ./
+
+# Alle Dependencies installieren
+RUN npm install
+
+# Anwendungscode kopieren
+COPY . .
+
+EXPOSE 3000
+
+# Starte React Development Server
+CMD ["npm", "start"]
